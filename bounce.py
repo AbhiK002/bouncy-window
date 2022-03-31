@@ -29,8 +29,7 @@ def customise_window(master):
     gravity_button.grid(row=0, column=0, sticky=W)
 
     message = Label(frame,
-                    text="ERROR 9806:\nGravity detected in your system.\n"
-                         "This window will not be able to float.",
+                    text="ERROR 9806:\nGravity detected.",
                     justify=LEFT
                     )
     message.grid(row=0, column=1, sticky=EW)
