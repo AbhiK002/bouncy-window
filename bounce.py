@@ -1,58 +1,90 @@
 from tkinter import *
 
 
-class App:
-    def __init__(self):
-        self.master = Tk()
-        self.master.title("Error")
+def customise_window(master):
+    master.title("Error")
+    master.resizable(False, False)
+    WINDOW_W = 300
+    WINDOW_H = 150
 
-        self.WINDOW_W = 360
-        self.WINDOW_H = 180
-        self.x_limit = self.master.winfo_screenwidth() - self.WINDOW_W
-        self.y_limit = self.master.winfo_screenheight() - self.WINDOW_H
+    y_limit = master.winfo_screenheight() - WINDOW_H
+    x_limit = master.winfo_screenwidth() - WINDOW_W
 
-        self.GRAVITY = 4  # px/20ms^2
-        self.BOUNCE_FACTOR = 0.42  # percentage of velocity remaining right after bounce
-        self.curr_vel = 0  # px/20ms
+    master.geometry(f"{WINDOW_W}x{WINDOW_H}+"
+                    f"{int(x_limit / 2)}+{int(y_limit / 4)}")
 
-        self.held = False
-        self.master.geometry(f"{self.WINDOW_W}x{self.WINDOW_H}+"
-                             f"{int(self.x_limit / 2)}+{int(self.y_limit / 2)}")
+    master.rowconfigure(1, weight=1)
+    master.columnconfigure(0, weight=1)
 
-        self.master.bind("<Button-1>", lambda e: self.under_hold())
-        self.master.bind("<ButtonRelease-1>", lambda e: self.released())
+    frame = Frame(master)
 
-        self.master.after(1000, self.move)
+    Frame(master, height=20).grid(row=0, column=0, sticky=EW)
 
+    frame.grid(row=1, column=0, sticky=NSEW, padx=2, pady=2)
+
+    frame.columnconfigure(1, weight=1)
+    frame.rowconfigure(0, weight=1)
+
+    gravity_button = Label(frame, text="  !", font=('Arial', 26, "bold"), fg="red")
+    gravity_button.grid(row=0, column=0, sticky=W)
+
+    message = Label(frame,
+                    text="ERROR 9806:\nGravity detected in your system.\n"
+                         "This window will not be able to float.",
+                    justify=LEFT
+                    )
+    message.grid(row=0, column=1, sticky=EW)
+
+    ok_button = Button(frame, text="OK", command=master.destroy, width=6, relief=RIDGE,
+                       overrelief=GROOVE)
+    ok_button.grid(row=1, column=1, sticky=E, padx=10, pady=5)
+
+    master.update()
+
+
+class Gravity:
+    def __init__(self, master, gravity=5, bounce_factor=0.5, *args, **kwargs):
+        self.master = master
+        self.master.update()
+
+        self.GRAVITY = gravity  # px/ms^2
+        self.TIME_FACTOR = 10  # ms
+        self.BOUNCE_FACTOR = bounce_factor  # percentage of velocity remaining right after bounce
+        self.curr_vel = 0  # px/ms
+
+        self.y_limit = self.master.winfo_screenheight() - self.master.winfo_height() - 69
+
+        self.master.after(1000, self.fally)
         self.master.mainloop()
 
-    def under_hold(self):
-        self.curr_vel = 0
-        self.held = True
-
-    def released(self):
-        self.held = False
+    def xpos(self):
+        return self.master.winfo_x()
 
     def ypos(self):
         return self.master.winfo_y()
 
-    def move(self, event=None):  # moves the window
+    def fally(self):  # moves the window
         if self.curr_vel >= 0:
+            if self.curr_vel == 0 and self.ypos() == self.y_limit:
+                pass
             if self.ypos() < self.y_limit:
                 self.curr_vel += self.GRAVITY
-                self.master.geometry(f"+{self.master.winfo_x()}+{self.ypos()+self.curr_vel}")
+                self.master.geometry(f"+{self.xpos()}+{self.ypos() + self.curr_vel}")
             else:
-                self.master.geometry(f"+{self.master.winfo_x()}+{self.y_limit}")
                 if self.curr_vel >= self.GRAVITY:
                     self.curr_vel = int(self.curr_vel * (-1) * self.BOUNCE_FACTOR)
                 else:
                     self.curr_vel = 0
-        else:
-            self.curr_vel += self.GRAVITY
-            self.master.geometry(f"+{self.master.winfo_x()}+{self.ypos() + self.curr_vel}")
+                    self.master.geometry(f"+{self.xpos()}+{self.y_limit}")
 
-        self.master.after(20, self.move)
+        else:
+            self.master.geometry(f"+{self.xpos()}+{self.ypos() + self.curr_vel}")
+            self.curr_vel += self.GRAVITY
+
+        self.master.after(self.TIME_FACTOR, self.fally)
 
 
 if __name__ == '__main__':
-    App()
+    root = Tk()
+    customise_window(root)
+    Gravity(root, gravity=5, bounce_factor=0.7)
