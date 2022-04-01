@@ -100,5 +100,4 @@ class Gravity:
 if __name__ == '__main__':
     root = Tk()
     customise_window(root)
-    Gravity(master=root)  # gravity = 3 and bounce_factor = 0.6 by default
-    # parameters also include gravity and bounce_factor
+    Gravity(master=root, gravity=4, bounce_factor=0.7)  # gravity = 3 and bounce_factor = 0.6 by default
