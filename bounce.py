@@ -42,8 +42,21 @@ def customise_window(master):
 
 
 class Gravity:
-    def __init__(self, master, gravity=5, bounce_factor=0.5, *args, **kwargs):
+    def __init__(self, master, gravity=3, bounce_factor=0.6, *args, **kwargs):
+        if type(bounce_factor) is int:
+            bounce_factor = float(bounce_factor)
+        if 'tkinter.Tk' not in str(type(master)):
+            raise TypeError("'master' parameter only accepts 'Tk' or 'Toplevel' object types.")
+        elif type(gravity) is not int:
+            raise TypeError("'gravity' parameter only accepts 'int' values.")
+        elif not 0 <= gravity < 100000:
+            raise ValueError("'gravity' value must be positive and below 100000")
+        elif type(bounce_factor) is not float:
+            raise TypeError("'bounce_factor' parameter only accepts 'int' or 'float' values.")
+        elif not 0.0 <= bounce_factor <= 1.0:
+            raise ValueError("'bounce_factor' value must be in range 0 to 1 only")
         self.master = master
+        self.master.bind("<Escape>", lambda e: self.master.destroy())
         self.master.update()
 
         self.GRAVITY = gravity  # px/ms^2
@@ -86,4 +99,4 @@ class Gravity:
 if __name__ == '__main__':
     root = Tk()
     customise_window(root)
-    Gravity(root, gravity=5, bounce_factor=0.7)
+    Gravity(master=root, gravity=4, bounce_factor=0.9)
