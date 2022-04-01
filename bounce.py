@@ -65,9 +65,12 @@ class Gravity:
         self.curr_vel = 0  # px/ms
 
         self.y_limit = self.master.winfo_screenheight() - self.master.winfo_height() - 69
-
+        print(self.y_limit)
+        
         if gravity != 0:
             self.master.after(1000, self.fally)
+
+        self.master.focus_force()
         self.master.mainloop()
 
     def xpos(self):
@@ -77,27 +80,30 @@ class Gravity:
         return self.master.winfo_y()
 
     def fally(self):  # moves the window
-        if self.curr_vel >= 0:
-            if self.curr_vel == 0 and self.ypos() == self.y_limit:
-                pass
-            if self.ypos() < self.y_limit:
-                self.curr_vel += self.GRAVITY
-                self.master.geometry(f"+{self.xpos()}+{self.ypos() + self.curr_vel}")
-            else:
-                if self.curr_vel >= self.GRAVITY:
-                    self.curr_vel = int(self.curr_vel * (-1) * self.BOUNCE_FACTOR)
-                else:
-                    self.curr_vel = 0
-                    self.master.geometry(f"+{self.xpos()}+{self.y_limit}")
-
+        if self.curr_vel == 0 and self.ypos() == self.y_limit:
+            pass
         else:
-            self.master.geometry(f"+{self.xpos()}+{self.ypos() + self.curr_vel}")
-            self.curr_vel += self.GRAVITY
+            if self.curr_vel >= 0:
+                if self.ypos() < self.y_limit:
+                    self.curr_vel += self.GRAVITY
+                    self.master.geometry(f"+{self.xpos()}+{self.ypos() + self.curr_vel}")
+                else:
+                    if self.curr_vel >= self.GRAVITY+4:
+                        if self.ypos() == self.y_limit:
+                            self.curr_vel -= (self.GRAVITY/2)
+                        self.curr_vel = int(self.curr_vel * (-1) * self.BOUNCE_FACTOR)
+                    else:
+                        self.curr_vel = 0
+                        self.master.geometry(f"+{self.xpos()}+{self.y_limit}")
 
-        self.master.after(self.TIME_FACTOR, self.fally)
+            else:
+                self.master.geometry(f"+{self.xpos()}+{self.ypos() + self.curr_vel}")
+                self.curr_vel += self.GRAVITY
+
+            self.master.after(self.TIME_FACTOR, self.fally)
 
 
 if __name__ == '__main__':
     root = Tk()
     customise_window(root)
-    Gravity(master=root, gravity=4, bounce_factor=0.7)  # gravity = 3 and bounce_factor = 0.6 by default
+    Gravity(root, 2, 0.7)  # gravity = 3 and bounce_factor = 0.6 by default
