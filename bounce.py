@@ -65,8 +65,7 @@ class Gravity:
         self.curr_vel = 0  # px/ms
 
         self.y_limit = self.master.winfo_screenheight() - self.master.winfo_height() - 69
-        print(self.y_limit)
-        
+
         if gravity != 0:
             self.master.after(1000, self.fally)
 
@@ -88,9 +87,9 @@ class Gravity:
                     self.curr_vel += self.GRAVITY
                     self.master.geometry(f"+{self.xpos()}+{self.ypos() + self.curr_vel}")
                 else:
-                    if self.curr_vel >= self.GRAVITY+4:
+                    if self.curr_vel >= self.GRAVITY + 4:
                         if self.ypos() == self.y_limit:
-                            self.curr_vel -= (self.GRAVITY/2)
+                            self.curr_vel -= (self.GRAVITY / 2)
                         self.curr_vel = int(self.curr_vel * (-1) * self.BOUNCE_FACTOR)
                     else:
                         self.curr_vel = 0
@@ -100,7 +99,7 @@ class Gravity:
                 self.master.geometry(f"+{self.xpos()}+{self.ypos() + self.curr_vel}")
                 self.curr_vel += self.GRAVITY
 
-            self.master.after(self.TIME_FACTOR, self.fally)
+        self.master.after(self.TIME_FACTOR, self.fally)
 
 
 if __name__ == '__main__':
