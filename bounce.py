@@ -66,7 +66,8 @@ class Gravity:
 
         self.y_limit = self.master.winfo_screenheight() - self.master.winfo_height() - 69
 
-        self.master.after(1000, self.fally)
+        if gravity != 0:
+            self.master.after(1000, self.fally)
         self.master.mainloop()
 
     def xpos(self):
@@ -99,4 +100,5 @@ class Gravity:
 if __name__ == '__main__':
     root = Tk()
     customise_window(root)
-    Gravity(master=root, gravity=4, bounce_factor=0.9)
+    Gravity(master=root)  # gravity = 3 and bounce_factor = 0.6 by default
+    # parameters also include gravity and bounce_factor
