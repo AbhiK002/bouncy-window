@@ -4,14 +4,6 @@ from tkinter import *
 def customise_window(master):
     master.title("Error")
     master.resizable(False, False)
-    WINDOW_W = 300
-    WINDOW_H = 150
-
-    y_limit = master.winfo_screenheight() - WINDOW_H
-    x_limit = master.winfo_screenwidth() - WINDOW_W
-
-    master.geometry(f"{WINDOW_W}x{WINDOW_H}+"
-                    f"{int(x_limit / 2)}+{int(y_limit / 4)}")
 
     master.rowconfigure(1, weight=1)
     master.columnconfigure(0, weight=1)
@@ -20,25 +12,33 @@ def customise_window(master):
 
     Frame(master, height=20).grid(row=0, column=0, sticky=EW)
 
-    frame.grid(row=1, column=0, sticky=NSEW, padx=2, pady=2)
+    frame.grid(row=1, column=0, sticky=NSEW, padx=20, pady=2)
 
     frame.columnconfigure(1, weight=1)
-    frame.rowconfigure(0, weight=1)
+    #frame.rowconfigure(0, weight=1)
 
-    gravity_button = Label(frame, text="  !", font=('Arial', 26, "bold"), fg="red")
+    gravity_button = Label(frame, text="!", font=('Arial', 26, "bold"), fg="red")
     gravity_button.grid(row=0, column=0, sticky=W)
 
     message = Label(frame,
-                    text="ERROR 9806:\nGravity detected.",
+                    text="ERROR 9806:\nGravity detected in your computer.",
                     justify=LEFT
                     )
-    message.grid(row=0, column=1, sticky=EW)
+    message.grid(row=0, column=1, sticky=EW, ipadx=10)
 
-    ok_button = Button(frame, text="OK", command=master.destroy, width=6, relief=RIDGE,
+    ok_button = Button(frame, text="OK", command=master.destroy, relief=RIDGE,
                        overrelief=GROOVE)
-    ok_button.grid(row=1, column=1, sticky=E, padx=10, pady=5)
+    ok_button.grid(row=1, column=1, sticky=E, ipadx=15, pady=5)
 
     master.update()
+    WINDOW_W = master.winfo_width()
+    WINDOW_H = master.winfo_height()
+
+    y_limit = master.winfo_screenheight() - WINDOW_H
+    x_limit = master.winfo_screenwidth() - WINDOW_W
+
+    master.geometry(f"{WINDOW_W}x{WINDOW_H}+"
+                    f"{int(x_limit / 2)}+{int(y_limit / 4)}")
 
 
 class Gravity:
@@ -70,7 +70,6 @@ class Gravity:
             self.master.after(1000, self.fally)
 
         self.master.focus_force()
-        self.master.mainloop()
 
     def xpos(self):
         return self.master.winfo_x()
@@ -106,3 +105,4 @@ if __name__ == '__main__':
     root = Tk()
     customise_window(root)
     Gravity(root, 2, 0.7)  # gravity = 3 and bounce_factor = 0.6 by default
+    root.mainloop()
