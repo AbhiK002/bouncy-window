@@ -15,7 +15,6 @@ def customise_window(master):
     frame.grid(row=1, column=0, sticky=NSEW, padx=20, pady=2)
 
     frame.columnconfigure(1, weight=1)
-    #frame.rowconfigure(0, weight=1)
 
     gravity_button = Label(frame, text="!", font=('Arial', 26, "bold"), fg="red")
     gravity_button.grid(row=0, column=0, sticky=W)
@@ -104,5 +103,5 @@ class Gravity:
 if __name__ == '__main__':
     root = Tk()
     customise_window(root)
-    Gravity(root, 2, 0.7)  # gravity = 3 and bounce_factor = 0.6 by default
+    a = Gravity(root, 2, 0.7)  # gravity = 3 and bounce_factor = 0.6 by default
     root.mainloop()
