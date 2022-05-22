@@ -26,10 +26,10 @@ run the file to get an error box with the gravity effect
 
 or
 
-To add the effect
+To add the effect to your custom tkinter window
 
-- import class `Gravity` from the file in another python file 
-- make a tkinter window of the type `Tk` (suppose it's named `root`) and customise it as you wish (don't do `root.mainloop()` anywhere, Gravity class will handle that)
+- import class `Gravity` from the file in the python file you want
+- in case you don't already have your desired tkinter window, make a tkinter window of the type `Tk` (suppose it's named `root`) and customise it as you wish (don't do `root.mainloop()` anywhere, Gravity class will handle that)
 - then use:
 ```
 Gravity(root)
