@@ -2,6 +2,7 @@
 It's not a ghost, it's gravity
 
 # info
+use the class `Gravity` to add gravity effect to any Tk window (like this: `Gravity(root)`) more info below:
 the class Gravity takes 1 to 3 arguments
 ```
 Gravity(master, gravity, bounce_factor)
