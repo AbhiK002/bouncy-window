@@ -18,7 +18,7 @@ default values for gravity and bounce_factor, if they're not passed as arguments
 
 - bounce_factor: (float) fraction of the previous height the window will reach upto after every bounce
   - ranges from 0.0 to 1.0
-  - 0 means the window will not bounce at all (0 times the previous height), therefore free to move anywhere like a normal window
+  - 0 means the window will not bounce at all (0 times the previous height), therefore will just stick to the ground like a magnet
   - 1 means the window will bounce till the same height every time, therefore bouncing forever
   - any other float value (lets say N) means the window will bounce upto "N" times the previous height, ultimately settling on the ground
 
