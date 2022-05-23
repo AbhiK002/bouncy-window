@@ -29,8 +29,8 @@ or
 
 To add the effect to your custom tkinter window
 
-- import class `Gravity` from the file in the python file you want
-- in case you don't already have your desired tkinter window, make a tkinter window of the type `Tk` (suppose it's named `root`) and customise it as you wish (don't do `root.mainloop()` anywhere, Gravity class will handle that)
+- import class `Gravity` from the file `bounce.py` to the python file you want
+- in case you don't already have your desired tkinter window, make a tkinter window of the type `Tk` (suppose it's named `root`) and customise it as you wish (don't execute `root.mainloop()`, Gravity class will handle that)
 - then use:
 ```
 Gravity(root)
@@ -40,4 +40,4 @@ to get a gravity effect on the window with default values `gravity=3, bounce_fac
 ```
 Gravity(root, 7, 0.8)
 ```
-to get a gravity effect on `root` with values `gravity=7, bounce_factor=0.8`
+to get a gravity effect on `root` with suppose values `gravity=7, bounce_factor=0.8`
