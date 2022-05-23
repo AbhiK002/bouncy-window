@@ -12,7 +12,6 @@ from tkinter import (
     W,
 )
 
-
 def create_error_box(master):
     master.title("Error")
     master.resizable(False, False)
@@ -97,7 +96,7 @@ class Gravity:
         self.BOUNCE_FACTOR = bounce_factor  # percentage of velocity remaining right after bounce
         self.curr_vel = 0  # px/ms
 
-        self.y_limit = self.master.winfo_screenheight() - self.master.winfo_height() - 69
+        self.y_limit = self.master.winfo_screenheight()
 
         if gravity != 0:
             self.master.after(1000, self.fally)
@@ -112,6 +111,7 @@ class Gravity:
         return self.master.winfo_y()
 
     def fally(self):  # moves the window
+        self.y_limit = self.master.winfo_screenheight() - self.master.winfo_height() - 69
         if self.curr_vel == 0 and self.ypos() == self.y_limit:
             self.master.after(2000, self.fally)
             pass
@@ -139,4 +139,5 @@ class Gravity:
 if __name__ == '__main__':
     root = Tk()
     create_error_box(root)
-    Gravity(root, 4, 0.7)  # master=root, gravity=4, bounce_factor=0.7
+
+    Gravity(root, 3, 0.7)  # master=root, gravity=4, bounce_factor=0.7
