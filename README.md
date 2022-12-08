@@ -1,6 +1,8 @@
 # bouncy-window
 It's not a ghost, it's gravity
 
+This program can simulate the effects of gravity on a window
+### Watch a [DEMO VIDEO](https://youtu.be/naj3HBQeBLY) of this project
 # info
 use the class `Gravity` to add gravity effect to any Tk window (like this: `Gravity(root)`) more info below:
 the class Gravity takes 1 to 3 arguments
